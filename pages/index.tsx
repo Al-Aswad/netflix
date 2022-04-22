@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { listenerCount } from 'process'
 import Banner from '../components/Banner/Bannder'
 import Header from '../components/Header/Header'
+import Row from '../components/Row/Row'
 import { Movie } from '../typings'
 import request from '../utils/request'
 
@@ -28,10 +30,10 @@ const Home = ({
   documentaries
 }:Props) => {
 
-  console.log(netflixOriginals);
+  console.log("Tranding Now" ,trendingNow);
 
   return (
-    <div className="relative h-screen bg-gradient-to-b from-gray-900/10 to-[#010511] lg:h-[140vh]">
+    <div className="relative h-screen bg-gradient-to-b lg:h-[140vh]">
       <Head>
         <title>Netflix Next App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -39,9 +41,21 @@ const Home = ({
 
       <Header></Header>
 
-      <main>
+      <main className='relative pb-24 pl-4 lg:space-y-24 lg:pl-16'>
         <Banner netflixOriginals={netflixOriginals}/>
-          {/* Next Js */}
+          <section className='md:space-y-24'>
+            <Row title="Original"  films={netflixOriginals}/>
+            {/* <Row title="Tranding Now"  films={trendingNow}/> */}
+            <Row title="Top Rated"  films={topRated}/>
+            <Row title="Action"  films={actionMovies}/>
+
+            {/* {list.length >0 && <Row title="My List" films={list} />} */}
+
+            <Row title="Komedi"  films={comedyMovies}/>
+            <Row title="Hantu"  films={horrorMovies}/>
+            <Row title="Romantis"  films={romanceMovies}/>
+            <Row title="Dokumentari"  films={documentaries}/>
+          </section>
       </main>
 
      
@@ -66,7 +80,7 @@ export const getServerSideProps = async () => {
 
   ] = await Promise.all([
     fetch(request.fecthNetflixOriginals).then(res => res.json()),
-    fetch(request.fetchTranding).then(res => res.json()),
+    fetch(request.fetchTrandingNow).then(res => res.json()),
     fetch(request.fetchTopRated).then(res => res.json()),
     fetch(request.fecthActionMovies).then(res => res.json()),
     fetch(request.fetchComedyMovies).then(res => res.json()),
@@ -74,6 +88,8 @@ export const getServerSideProps = async () => {
     fetch(request.fetchRomanceMovies).then(res => res.json()),
     fetch(request.fetchDocumentaries).then(res => res.json()),
   ]);
+
+  console.log("Trading Now ", trandingNow);
 
   return {
     props:{

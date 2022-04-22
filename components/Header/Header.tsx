@@ -24,7 +24,7 @@ function Header() {
     },[]);  
 
   return (
-      <header className={`${isScrolled && "bg-red-500"}`}>
+      <header className={`${isScrolled && "bg-[#141414]"}`}>
           <div className="flex space-x-2 md:space-x-10">
                 <img
                     src="https://rb.gy/ulxxee"
