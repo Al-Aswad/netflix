@@ -1,10 +1,11 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import { listenerCount } from 'process'
+import { useRecoilValue } from 'recoil'
+import { modalState } from '../atoms/modalAtom'
 import Banner from '../components/Banner/Bannder'
 import Header from '../components/Header/Header'
+import Modal from '../components/Modal/Modal'
 import Row from '../components/Row/Row'
+import useAuth from '../hooks/useAuth'
 import { Movie } from '../typings'
 import request from '../utils/request'
 
@@ -29,6 +30,11 @@ const Home = ({
   romanceMovies,
   documentaries
 }:Props) => {
+  const {logout, loading} =useAuth()
+  const showModal=useRecoilValue(modalState)
+  // const [showModal, setShowModal]= useState(false)
+
+  if(loading) return <div>Loading...</div>
 
   console.log("Tranding Now" ,trendingNow);
 
@@ -58,6 +64,7 @@ const Home = ({
           </section>
       </main>
 
+      {showModal && <Modal/>}
      
     </div>
   )
