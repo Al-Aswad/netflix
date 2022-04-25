@@ -1,11 +1,9 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import { listenerCount } from 'process'
-import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { modalState } from '../atoms/modalAtom'
 import Banner from '../components/Banner/Bannder'
 import Header from '../components/Header/Header'
+import Modal from '../components/Modal/Modal'
 import Row from '../components/Row/Row'
 import useAuth from '../hooks/useAuth'
 import { Movie } from '../typings'
@@ -33,8 +31,8 @@ const Home = ({
   documentaries
 }:Props) => {
   const {logout, loading} =useAuth()
-  // const showModal=useRecoilValue
-  const [showModal, setShowModal]= useState(false)
+  const showModal=useRecoilValue(modalState)
+  // const [showModal, setShowModal]= useState(false)
 
   if(loading) return <div>Loading...</div>
 
@@ -66,6 +64,7 @@ const Home = ({
           </section>
       </main>
 
+      {showModal && <Modal/>}
      
     </div>
   )
